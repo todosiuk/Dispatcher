@@ -22,4 +22,13 @@
 		cache-period="31556926" />
 	<mvc:annotation-driven />
 
+	<bean id="providerDao" class="dispatcher.dao.ProviderDaoImpl">
+		<constructor-arg>
+			<value>dispatcher.entity.Provider</value>
+		</constructor-arg>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
 </beans>
