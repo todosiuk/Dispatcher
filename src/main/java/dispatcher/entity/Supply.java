@@ -12,12 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "supply")
-@Component
 public class Supply implements Serializable {
 
 	public Supply(Integer idSupply, String carNumber, String driverName, String phone, String product,
@@ -65,7 +66,7 @@ public class Supply implements Serializable {
 	@Column(name = "department")
 	private String department;
 
-	@Column(name = "arrivalDate")
+	@Column(name = "arrivalDate", columnDefinition = "DATETIME")
 	private LocalDate arrivalDate;
 
 	@Column(name = "storekeeper")

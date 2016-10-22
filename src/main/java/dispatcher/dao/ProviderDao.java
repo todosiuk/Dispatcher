@@ -1,12 +1,22 @@
 package dispatcher.dao;
 
+import java.io.Serializable;
 import java.util.List;
-
+import org.springframework.stereotype.Component;
 import dispatcher.entity.Provider;
 
-public interface ProviderDao extends GenericDao<Provider, Integer> {
-	
-	List<Provider> findById(Integer id);
-	List<Provider> findByName(String name);
+@Component
+public interface ProviderDao<Provider, String extends Serializable> {
 
+	public void create(Provider entity);
+
+	public List<Provider> read();
+
+	public void update(Provider entity);
+
+	public void delete(Integer id);
+
+	public Provider findById(Integer id);
+
+	public Provider findByName(String name);
 }

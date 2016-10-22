@@ -1,9 +1,30 @@
 package dispatcher.dao;
 
-import dispatcher.entity.Supply;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
-public interface SupplyDao extends GenericDao<Supply, Integer> {
-	
-	
+import org.springframework.stereotype.Component;
+
+@Component
+public interface SupplyDao<T, Id extends Serializable> {
+
+	public void create(Integer id, T entity);
+
+	public void delete(Integer id);
+
+	public List<T> read();
+
+	public void update(Integer id);
+
+	public T findById(Integer id);
+
+	public List<T> findByDepartment(String department);
+
+	public List<T> findByCarNumber(String carNumber);
+
+	public List<T> findByArrivalDate(LocalDate arrivalDate);
+
+	public List<T> findByBetweenDate(LocalDate startDate, LocalDate endDate);
 
 }

@@ -1,6 +1,7 @@
 package dispatcher.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,15 +13,24 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Entity bean with JPA annotations Hibernate provides JPA implementation
+ */
+@Entity
 @Table(name = "provider")
-@Component
 public class Provider implements Serializable {
 
-	public Provider(Integer idProvider, String providerName, List<Supply> supplyList) {
-		this.idProvider = idProvider;
+	public Provider() {
+	}
+
+	public Provider(String providerName) {
+	}
+
+	public Provider(String providerName, List<Supply> supplyList) {
 		this.providerName = providerName;
 		this.supplyList = supplyList;
 	}
@@ -28,15 +38,15 @@ public class Provider implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idprovider")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idprovider")
 	private Integer idProvider;
 
-	@Column(name="name")
+	@Column(name = "name")
 	private String providerName;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "provider")
-	private List<Supply> supplyList;
+	private List<Supply> supplyList = new ArrayList<Supply>();
 
 	public Integer getIdProvider() {
 		return idProvider;
