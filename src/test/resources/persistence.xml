@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+	<persistence-unit name="dispatcherPersistenceUnit"
+		transaction-type="RESOURCE_LOCAL">
+		<class>dispatcher.entity.Provider</class>
+		<class>dispatcher.entity.Supply</class>
+	</persistence-unit>
+</persistence>
