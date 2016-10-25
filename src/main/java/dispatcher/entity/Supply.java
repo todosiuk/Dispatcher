@@ -21,10 +21,9 @@ import org.springframework.stereotype.Component;
 @Table(name = "supply")
 public class Supply implements Serializable {
 
-	public Supply(Integer idSupply, String carNumber, String driverName, String phone, String product,
-			String vendorDocument, String documentReceiving, String department, LocalDate arrivalDate,
-			String storekeeper, String dispatcher, Provider provider) {
-		this.idSupply = idSupply;
+	public Supply(String carNumber, String driverName, String phone, String product, String vendorDocument,
+			String documentReceiving, String department, LocalDate arrivalDate, String storekeeper, String dispatcher,
+			Provider provider) {
 		this.carNumber = carNumber;
 		this.driverName = driverName;
 		this.phone = phone;
