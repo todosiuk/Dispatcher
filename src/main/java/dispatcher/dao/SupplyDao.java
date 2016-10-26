@@ -17,7 +17,7 @@ public interface SupplyDao<T, Id extends Serializable> {
 
 	public List<T> read();
 
-	public void update(Integer idSupply);
+	public void update(Supply supply);
 
 	public Supply findById(Integer idSupply);
 

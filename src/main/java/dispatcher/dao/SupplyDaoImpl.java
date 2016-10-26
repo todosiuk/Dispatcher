@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,26 +29,25 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 
 	@Override
 	public void delete(Integer idSupply) {
-		// TODO Auto-generated method stub
-
+		Supply supply = manager.find(Supply.class, idSupply);
+		manager.remove(supply);
 	}
 
 	@Override
 	public List<Supply> read() {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT s FROM Supply s";
+		TypedQuery<Supply> supplyList = manager.createQuery(query, Supply.class);
+		return supplyList.getResultList();
 	}
 
 	@Override
-	public void update(Integer idSupply) {
-		// TODO Auto-generated method stub
-
+	public void update(Supply supply) {
+		manager.merge(supply);
 	}
 
 	@Override
 	public Supply findById(Integer idSupply) {
-		// TODO Auto-generated method stub
-		return null;
+		return manager.find(Supply.class, idSupply);
 	}
 
 	@Override
