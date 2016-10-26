@@ -32,7 +32,7 @@ public class ProviderDaoImpl implements ProviderDao<Provider, String> {
 	// begin() and commit() at the start/end of the method. If exception occurs
 	// it will also
 	// call rollback()
-	
+
 	@Override
 	public void create(Provider provider) {
 		manager.persist(provider);
@@ -62,13 +62,13 @@ public class ProviderDaoImpl implements ProviderDao<Provider, String> {
 	}
 
 	@Override
-	public Provider findByName(String nameProvider) {
+	public Provider findByName(String providerName) {
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Provider> nameLikeCriteria = cb.createQuery(Provider.class);
 		Root<Provider> likeProviderRoot = nameLikeCriteria.from(Provider.class);
 		nameLikeCriteria.select(likeProviderRoot);
 		ParameterExpression<String> parameter = cb.parameter(String.class);
-		nameLikeCriteria.where(cb.like(likeProviderRoot.get("nameProvider"), nameProvider));
+		nameLikeCriteria.where(cb.like(likeProviderRoot.get("providerName"), providerName));
 		return manager.createQuery(nameLikeCriteria).getSingleResult();
 	}
 

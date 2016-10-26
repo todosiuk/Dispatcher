@@ -6,18 +6,20 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import dispatcher.entity.Supply;
+
 @Component
 public interface SupplyDao<T, Id extends Serializable> {
 
-	public void create(Integer id, T entity);
+	public void create(Integer idProvider, Supply supply);
 
-	public void delete(Integer id);
+	public void delete(Integer idSupply);
 
 	public List<T> read();
 
-	public void update(Integer id);
+	public void update(Supply supply);
 
-	public T findById(Integer id);
+	public Supply findById(Integer idSupply);
 
 	public List<T> findByDepartment(String department);
 
