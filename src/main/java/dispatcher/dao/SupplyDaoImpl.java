@@ -4,8 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,26 +57,35 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 
 	@Override
 	public List<Supply> findByDepartment(String department) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
+		Root<Supply> root = query.from(Supply.class);
+		query.select(root);
+		ParameterExpression<String> parameter = cb.parameter(String.class);
+		query.where(cb.like(root.get("department"), department));
+		return manager.createQuery(query).getResultList();
 	}
 
 	@Override
 	public List<Supply> findByCarNumber(String carNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
+		Root<Supply> root = query.from(Supply.class);
+		query.select(root);
+		ParameterExpression<String> parameter = cb.parameter(String.class);
+		query.where(cb.like(root.get("carNumber"), carNumber));
+		return manager.createQuery(query).getResultList();
 	}
 
 	@Override
-	public List<Supply> findByArrivalDate(LocalDate arrivalDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Supply> findByBetweenDate(LocalDate startDate, LocalDate endDate) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Supply> findBetweenDate(LocalDate startDate, LocalDate endDate) {
+		CriteriaBuilder cb = manager.getCriteriaBuilder();
+		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
+		Root<Supply> root = query.from(Supply.class);
+		query.select(root);
+		ParameterExpression<LocalDate> parameter = cb.parameter(LocalDate.class);
+		query.where(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
+		return manager.createQuery(query).getResultList();
 	}
 
 }

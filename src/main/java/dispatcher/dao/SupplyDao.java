@@ -25,8 +25,6 @@ public interface SupplyDao<T, Id extends Serializable> {
 
 	public List<T> findByCarNumber(String carNumber);
 
-	public List<T> findByArrivalDate(LocalDate arrivalDate);
-
-	public List<T> findByBetweenDate(LocalDate startDate, LocalDate endDate);
+	public List<T> findBetweenDate(LocalDate startDate, LocalDate endDate);
 
 }
