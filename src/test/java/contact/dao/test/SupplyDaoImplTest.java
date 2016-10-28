@@ -30,7 +30,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -46,7 +46,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -63,7 +63,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -79,7 +79,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -96,7 +96,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -111,7 +111,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -126,7 +126,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
