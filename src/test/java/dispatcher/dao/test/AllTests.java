@@ -1,4 +1,4 @@
-package contact.dao.test;
+package dispatcher.dao.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

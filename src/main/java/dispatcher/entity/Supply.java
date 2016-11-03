@@ -37,6 +37,9 @@ public class Supply implements Serializable {
 		this.provider = provider;
 	}
 
+	public Supply() {
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

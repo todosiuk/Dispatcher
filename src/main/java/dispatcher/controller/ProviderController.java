@@ -1,7 +1,6 @@
 package dispatcher.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.entity.Provider;
 
@@ -39,7 +37,7 @@ public class ProviderController {
 		return "providersList";
 	}
 
-	@RequestMapping(value = "providers/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/providers/delete", method = RequestMethod.GET)
 	public String deleteProvider(@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model) {
 		providerDao.delete(idProvider);
 		model.addAttribute("idProvider", idProvider);
@@ -61,7 +59,13 @@ public class ProviderController {
 		model.addAttribute("idProvider", idProvider);
 		return "providersList";
 	}
-	
-	
+
+	@RequestMapping(value = "/providers/searchByName", method = RequestMethod.GET)
+	public String searchProviderByName(@RequestParam(value = "providerName", required = true) String providerName,
+			Model model) {
+		Provider provider = providerDao.findByName(providerName);
+		model.addAttribute("provider", provider);
+		return "searchProviderByName";
+	}
 
 }

@@ -1,4 +1,4 @@
-package contact.dao.test;
+package dispatcher.dao.test;
 
 import java.time.LocalDate;
 import java.util.List;
