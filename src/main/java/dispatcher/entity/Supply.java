@@ -40,6 +40,11 @@ public class Supply implements Serializable {
 	public Supply() {
 	}
 
+	public Supply(String string, String string2, String string3, String string4, String string5, String string6,
+			LocalDate now, String string7, String string8, Provider p) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
