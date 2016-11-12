@@ -8,8 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import dispatcher.entity.Provider;
@@ -53,7 +58,8 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 	}
 
 	@Override
-	public List<Supply> findByDepartment(String department) {
+	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate startDate, LocalDate endDate,
+			Integer idProvider) {
 		CriteriaBuilder cb = manager.getCriteriaBuilder();
 		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
 		Root<Supply> root = query.from(Supply.class);
@@ -61,37 +67,17 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 		if (department != null) {
 			predicates.add(cb.like(root.get("department"), department));
 		}
-		Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-		query.select(root).where(predicatesarr);
-		return manager.createQuery(query).getResultList();
-	}
-
-	@Override
-	public List<Supply> findByCarNumber(String carNumber) {
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-		Root<Supply> root = query.from(Supply.class);
-		List<Predicate> predicates = new ArrayList<Predicate>();
 		if (carNumber != null) {
 			predicates.add(cb.like(root.get("carNumber"), carNumber));
 		}
-		Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-		query.select(root).where(predicatesarr);
-		return manager.createQuery(query).getResultList();
-	}
-
-	@Override
-	public List<Supply> findBetweenDate(LocalDate startDate, LocalDate endDate) {
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-		Root<Supply> root = query.from(Supply.class);
-		List<Predicate> predicates = new ArrayList<Predicate>();
 		if (startDate != null) {
 			predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
+		}
+		if (idProvider != null) {
+			predicates.add(cb.equal(root.get("provider"), idProvider));
 		}
 		Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
 		query.select(root).where(predicatesarr);
 		return manager.createQuery(query).getResultList();
 	}
-
 }

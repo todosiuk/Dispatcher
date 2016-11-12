@@ -92,47 +92,22 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testFindByDepartment() {
+	public void testSearchByCriteria() {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
 		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
+		Supply s1 = new Supply("AA2834CA", "Александр", "066-469-99-89", "Плитка", "РН5647", "ПЗК-581475", "80",
+				LocalDate.now(), "Маша", "Галя", p);
 		s.setProvider(p);
+		s1.setProvider(p);
 		int idProvider = p.getIdProvider();
 		supplyDao.create(idProvider, s);
-		List<Supply> supList = supplyDao.findByDepartment(s.getDepartment());
-		Assert.assertNotNull(supList);
+		supplyDao.create(idProvider, s1);
+		List<Supply> search = supplyDao.searchByCriteria("80", "AA2834CA", null, null, idProvider);
+		Assert.assertEquals(search.size(), 1);
+		Assert.assertEquals(search.get(0).getCarNumber(), "AA2834CA");
+		Assert.assertEquals("Киев", search.get(0).getProvider().getProviderName());
 	}
-
-	@Test
-	@Transactional
-	public void testFindByCarNumber() {
-		Provider p = new Provider();
-		p.setProviderName("Киев");
-		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
-				LocalDate.now(), "Вася", "Петя", p);
-		s.setProvider(p);
-		int idProvider = p.getIdProvider();
-		supplyDao.create(idProvider, s);
-		List<Supply> supList = supplyDao.findByCarNumber(s.getCarNumber());
-		Assert.assertNotNull(supList);
-	}
-
-	@Test
-	@Transactional
-	public void testFindBetweenDate() {
-		Provider p = new Provider();
-		p.setProviderName("Киев");
-		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
-				LocalDate.now(), "Вася", "Петя", p);
-		s.setProvider(p);
-		int idProvider = p.getIdProvider();
-		supplyDao.create(idProvider, s);
-		List<Supply> supList = supplyDao.findBetweenDate(LocalDate.now(), LocalDate.now());
-		Assert.assertNotNull(supList);
-	}
-
 }

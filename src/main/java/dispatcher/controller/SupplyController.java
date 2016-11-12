@@ -1,5 +1,7 @@
 package dispatcher.controller;
 
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +62,27 @@ public class SupplyController {
 		supply.setIdSupply(idSupply);
 		supplyDao.update(supply);
 		return "success";
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public String showSearchForm(@RequestParam(value = "idProvider", required = true) Integer idProvider,
+			 Model model) {
+		Supply supply = new Supply();
+		supply.setProvider(providerDao.findById(idProvider));
+		model.addAttribute("idProvider", idProvider);
+		return "formOfSearch";
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public String search(@RequestParam(value = "idProvider", required = true) Integer idProvider,
+			@RequestParam(value = "department", required = true) String department,
+			@RequestParam(value = "carNumber", required = true) String carNumber,
+			@RequestParam(value = "startDate", required = true) LocalDate startDate,
+			@RequestParam(value = "endDate", required = true) LocalDate endDate,
+			@ModelAttribute("supplyAttribute") Supply supply, Model model) {
+		List<Supply> list = supplyDao.searchByCriteria(department, carNumber, startDate, endDate, idProvider);
+		model.addAttribute("supply", list);
+		return "searchList";
 	}
 
 }
