@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import dispatcher.entity.Provider;
 import dispatcher.entity.Supply;
 
 @Component
@@ -21,12 +22,6 @@ public interface SupplyDao<T, Id extends Serializable> {
 
 	public Supply findById(Integer idSupply);
 
-	public List<T> findByDepartment(String department);
-
-	public List<T> findByCarNumber(String carNumber);
-
-	public List<T> findByArrivalDate(LocalDate arrivalDate);
-
-	public List<T> findByBetweenDate(LocalDate startDate, LocalDate endDate);
-
+	public List<T> searchByCriteria(String department, String carNumber, LocalDate startDate, LocalDate endDate,
+			Integer idProvider);
 }

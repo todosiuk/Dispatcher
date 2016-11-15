@@ -1,4 +1,4 @@
-package contact.dao.test;
+package dispatcher.dao.test;
 
 import java.util.List;
 

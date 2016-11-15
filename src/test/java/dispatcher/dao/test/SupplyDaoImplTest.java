@@ -1,4 +1,4 @@
-package contact.dao.test;
+package dispatcher.dao.test;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,7 +30,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -46,7 +46,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -63,7 +63,7 @@ public class SupplyDaoImplTest {
 		Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
-		Supply s = new Supply("AA2630CA", "Онашко", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
 				LocalDate.now(), "Вася", "Петя", p);
 		s.setProvider(p);
 		int idProvider = p.getIdProvider();
@@ -73,4 +73,41 @@ public class SupplyDaoImplTest {
 		Assert.assertEquals(0, supList.size());
 	}
 
+	@Test
+	@Transactional
+	public void testFindById() {
+		Provider p = new Provider();
+		p.setProviderName("Киев");
+		providerDao.create(p);
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+				LocalDate.now(), "Вася", "Петя", p);
+		s.setProvider(p);
+		int idProvider = p.getIdProvider();
+		supplyDao.create(idProvider, s);
+		List<Supply> supList = supplyDao.read();
+		int supId = supList.get(0).getIdSupply();
+		Supply sup = supplyDao.findById(supId);
+		Assert.assertEquals(s, sup);
+	}
+
+	@Test
+	@Transactional
+	public void testSearchByCriteria() {
+		Provider p = new Provider();
+		p.setProviderName("Киев");
+		providerDao.create(p);
+		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
+				LocalDate.now(), "Вася", "Петя", p);
+		Supply s1 = new Supply("AA2834CA", "Александр", "066-469-99-89", "Плитка", "РН5647", "ПЗК-581475", "80",
+				LocalDate.now(), "Маша", "Галя", p);
+		s.setProvider(p);
+		s1.setProvider(p);
+		int idProvider = p.getIdProvider();
+		supplyDao.create(idProvider, s);
+		supplyDao.create(idProvider, s1);
+		List<Supply> search = supplyDao.searchByCriteria("80", "AA2834CA", null, null, idProvider);
+		Assert.assertEquals(search.size(), 1);
+		Assert.assertEquals(search.get(0).getCarNumber(), "AA2834CA");
+		Assert.assertEquals("Киев", search.get(0).getProvider().getProviderName());
+	}
 }

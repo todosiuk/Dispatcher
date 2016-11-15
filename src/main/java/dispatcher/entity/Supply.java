@@ -2,7 +2,6 @@ package dispatcher.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "supply")
@@ -35,6 +30,13 @@ public class Supply implements Serializable {
 		this.storekeeper = storekeeper;
 		this.dispatcher = dispatcher;
 		this.provider = provider;
+	}
+
+	public Supply() {
+	}
+
+	public Supply(String string, String string2, String string3, String string4, String string5, String string6,
+			LocalDate now, String string7, String string8, Provider p) {
 	}
 
 	private static final long serialVersionUID = 1L;

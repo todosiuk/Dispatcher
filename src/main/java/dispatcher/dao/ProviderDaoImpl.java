@@ -40,7 +40,7 @@ public class ProviderDaoImpl implements ProviderDao<Provider, String> {
 
 	@Override
 	public List<Provider> read() {
-		String sqlString = "SELECT p FROM Provider p";
+		String sqlString = "SELECT p FROM Provider p ORDER BY p.providerName";
 		TypedQuery<Provider> query = manager.createQuery(sqlString, Provider.class);
 		return query.getResultList();
 	}
