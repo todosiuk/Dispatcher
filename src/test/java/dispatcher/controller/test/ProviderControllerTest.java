@@ -61,13 +61,70 @@ public class ProviderControllerTest {
 	public void testAddingProvider() throws Exception {
 		Provider provider = new Provider();
 		provider.setIdProvider(1);
-		provider.setProviderName("OOO");
+		provider.setProviderName("Киев");
 		providerDao.create(provider);
 
 		Mockito.verify(providerDao).create(provider);
 
 		mockMvc.perform(post("/providerController/providers/add")).andExpect(status().isOk())
 				.andExpect(view().name("providersList")).andExpect(model().attributeExists("providerAttribute"));
+	}
+
+	@Test
+	public void testDelete() throws Exception {
+		Integer idProvider = 1;
+		providerDao.delete(idProvider);
+
+		Mockito.verify(providerDao).delete(idProvider);
+
+		mockMvc.perform(get("/providerController/providers/delete").param("idProvider", idProvider.toString()))
+				.andExpect(status().isOk()).andExpect(view().name("providersList"))
+				.andExpect(model().attribute("idProvider", idProvider));
+	}
+
+	@Test
+	public void testShowFormOfUpdatingProvider() throws Exception {
+		Integer idProvider = 1;
+		mockMvc.perform(get("/providerController/providers/update").param("idProvider", idProvider.toString()))
+				.andExpect(status().isOk()).andExpect(view().name("formOfUpdatingProvider"))
+				.andExpect(model().attribute("providerAttribute", providerDao.findById(idProvider)));
+	}
+
+	@Test
+	public void testUpdatingProvider() throws Exception {
+		Provider provider = new Provider();
+		provider.setIdProvider(1);
+		provider.setProviderName("Киев");
+		providerDao.create(provider);
+		provider.setIdProvider(1);
+		provider.setProviderName("Полтава");
+		providerDao.update(provider);
+
+		Mockito.verify(providerDao).create(provider);
+		Mockito.verify(providerDao).update(provider);
+
+		mockMvc.perform(
+				post("/providerController/providers/update").param("idProvider", provider.getIdProvider().toString()))
+				.andExpect(status().isOk()).andExpect(view().name("providersList"))
+				.andExpect(model().attribute("idProvider", provider.getIdProvider()))
+				.andExpect(model().attributeExists("providerAttribute"));
+	}
+
+	@Test
+	public void testSearchProviderByName() throws Exception {
+		Provider provider = new Provider();
+		provider.setIdProvider(1);
+		provider.setProviderName("Киев");
+		providerDao.create(provider);
+		Provider searchProvider = providerDao.findByName(provider.getProviderName());
+
+		Mockito.verify(providerDao).create(provider);
+		Mockito.verify(providerDao).findByName(provider.getProviderName());
+
+		mockMvc.perform(
+				get("/providerController/providers/searchByName").param("providerName", provider.getProviderName()))
+				.andExpect(status().isOk()).andExpect(view().name("searchProviderByName"))
+				.andExpect(model().attribute("provider", searchProvider));
 	}
 
 }
