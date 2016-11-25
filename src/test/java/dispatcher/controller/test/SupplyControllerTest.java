@@ -16,7 +16,10 @@ import dispatcher.dao.SupplyDaoImpl;
 import dispatcher.entity.Provider;
 import dispatcher.entity.Supply;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import static org.mockito.BDDMockito.*;
@@ -83,8 +86,85 @@ public class SupplyControllerTest {
 				.andExpect(status().isOk()).andExpect(view().name("success"))
 				.andExpect(model().attributeExists("supplyAttribute"));
 	}
-	
-	
-	
-	
+
+	@Test
+	public void testDeleteSupply() throws Exception {
+		Provider provider = new Provider();
+		provider.setIdProvider(1);
+		provider.setProviderName("OOO");
+		Supply supply = new Supply();
+		supply.setProvider(provider);
+		supply.setCarNumber("AA2630CA");
+		supply.setDepartment("80");
+		supply.setDispatcher("Misha");
+		supply.setDocumentReceiving("KH1542");
+		supply.setDriverName("Pasha");
+		supply.setPhone("066-526-56-87");
+		supply.setProduct("Ламинат");
+		supply.setStorekeeper("Vasya");
+		supply.setVendorDocument("KJ5478");
+		supply.setIdSupply(1);
+		supply.setArrivalDate(LocalDate.of(2014, Month.DECEMBER, 12));
+
+		supplyDao.delete(supply.getIdSupply());
+
+		Mockito.verify(supplyDao).delete(supply.getIdSupply());
+
+		mockMvc.perform(get("/supplyController/delete").param("idSupply", supply.getIdSupply().toString()))
+				.andExpect(status().isOk()).andExpect(view().name("success"));
+	}
+
+	@Test
+	public void testShowFormOfUpdatingSupply() throws Exception {
+		Provider provider = new Provider();
+		provider.setIdProvider(1);
+		provider.setProviderName("OOO");
+		Supply supply = new Supply();
+		supply.setProvider(provider);
+		supply.setCarNumber("AA2630CA");
+		supply.setDepartment("80");
+		supply.setDispatcher("Misha");
+		supply.setDocumentReceiving("KH1542");
+		supply.setDriverName("Pasha");
+		supply.setPhone("066-526-56-87");
+		supply.setProduct("Ламинат");
+		supply.setStorekeeper("Vasya");
+		supply.setVendorDocument("KJ5478");
+		supply.setIdSupply(1);
+		supply.setArrivalDate(LocalDate.of(2014, Month.DECEMBER, 12));
+
+		mockMvc.perform(get("/supplyController/update").param("idProvider", provider.getIdProvider().toString())
+				.param("idSupply", supply.getIdSupply().toString())).andExpect(status().isOk())
+				.andExpect(view().name("formOfUpdatingSupply"))
+				.andExpect(model().attribute("idProvider", provider.getIdProvider()))
+				.andExpect(model().attribute("supplyAttribute", supplyDao.findById(supply.getIdSupply())));
+	}
+
+	@Test
+	public void testUpdatingSupply() throws Exception {
+		Provider provider = new Provider();
+		provider.setIdProvider(1);
+		provider.setProviderName("OOO");
+		Supply supply = new Supply();
+		supply.setProvider(provider);
+		supply.setCarNumber("AA2630CA");
+		supply.setDepartment("80");
+		supply.setDispatcher("Misha");
+		supply.setDocumentReceiving("KH1542");
+		supply.setDriverName("Pasha");
+		supply.setPhone("066-526-56-87");
+		supply.setProduct("Ламинат");
+		supply.setStorekeeper("Vasya");
+		supply.setVendorDocument("KJ5478");
+		supply.setIdSupply(1);
+		supply.setArrivalDate(LocalDate.of(2014, Month.DECEMBER, 12));
+		supplyDao.update(supply);
+
+		Mockito.verify(supplyDao).update(supply);
+
+		mockMvc.perform(post("/supplyController/update").param("idProvider", provider.getIdProvider().toString())
+				.param("idSupply", supply.getIdSupply().toString())).andExpect(status().isOk())
+				.andExpect(view().name("success")).andExpect(model().attributeExists("supplyAttribute"));
+	}
+
 }
