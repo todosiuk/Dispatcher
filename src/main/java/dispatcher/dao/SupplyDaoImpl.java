@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import dispatcher.entity.Provider;
 import dispatcher.entity.Supply;
+import dispatcher.exception.DaoException;
 
 @Repository
 @Transactional
@@ -28,56 +29,80 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 	private EntityManager manager;
 
 	@Override
-	public void create(Integer idProvider, Supply supply) {
-		Provider provider = manager.find(Provider.class, idProvider);
-		supply.setProvider(provider);
-		manager.persist(supply);
+	public void create(Integer idProvider, Supply supply) throws DaoException {
+		try {
+			Provider provider = manager.find(Provider.class, idProvider);
+			supply.setProvider(provider);
+			manager.persist(supply);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method create.", e);
+		}
 	}
 
 	@Override
-	public void delete(Integer idSupply) {
-		Supply supply = manager.find(Supply.class, idSupply);
-		manager.remove(supply);
+	public void delete(Integer idSupply) throws DaoException {
+		try {
+			Supply supply = manager.find(Supply.class, idSupply);
+			manager.remove(supply);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method delete.", e);
+		}
 	}
 
 	@Override
-	public List<Supply> read() {
-		String query = "SELECT s FROM Supply s";
-		TypedQuery<Supply> supplyList = manager.createQuery(query, Supply.class);
-		return supplyList.getResultList();
+	public List<Supply> read() throws DaoException {
+		try {
+			String query = "SELECT s FROM Supply s";
+			TypedQuery<Supply> supplyList = manager.createQuery(query, Supply.class);
+			return supplyList.getResultList();
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method read.", e);
+		}
 	}
 
 	@Override
-	public void update(Supply supply) {
-		manager.merge(supply);
+	public void update(Supply supply) throws DaoException {
+		try {
+			manager.merge(supply);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method update.", e);
+		}
 	}
 
 	@Override
-	public Supply findById(Integer idSupply) {
-		return manager.find(Supply.class, idSupply);
+	public Supply findById(Integer idSupply) throws DaoException {
+		try {
+			return manager.find(Supply.class, idSupply);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method findById.", e);
+		}
 	}
 
 	@Override
 	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate startDate, LocalDate endDate,
-			Integer idProvider) {
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-		Root<Supply> root = query.from(Supply.class);
-		List<Predicate> predicates = new ArrayList<Predicate>();
-		if (department != null) {
-			predicates.add(cb.like(root.get("department"), department));
+			Integer idProvider) throws DaoException {
+		try {
+			CriteriaBuilder cb = manager.getCriteriaBuilder();
+			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
+			Root<Supply> root = query.from(Supply.class);
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			if (department != null) {
+				predicates.add(cb.like(root.get("department"), department));
+			}
+			if (carNumber != null) {
+				predicates.add(cb.like(root.get("carNumber"), carNumber));
+			}
+			if (startDate != null) {
+				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
+			}
+			if (idProvider != null) {
+				predicates.add(cb.equal(root.get("provider"), idProvider));
+			}
+			Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
+			query.select(root).where(predicatesarr);
+			return manager.createQuery(query).getResultList();
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class SupplyDaoImpl, method searchByCriteria.", e);
 		}
-		if (carNumber != null) {
-			predicates.add(cb.like(root.get("carNumber"), carNumber));
-		}
-		if (startDate != null) {
-			predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
-		}
-		if (idProvider != null) {
-			predicates.add(cb.equal(root.get("provider"), idProvider));
-		}
-		Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-		query.select(root).where(predicatesarr);
-		return manager.createQuery(query).getResultList();
 	}
 }

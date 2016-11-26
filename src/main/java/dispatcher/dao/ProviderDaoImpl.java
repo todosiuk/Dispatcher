@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dispatcher.entity.Provider;
+import dispatcher.exception.DaoException;
 
 @Repository
 @Transactional
@@ -34,42 +35,66 @@ public class ProviderDaoImpl implements ProviderDao<Provider, String> {
 	// call rollback()
 
 	@Override
-	public void create(Provider provider) {
-		manager.persist(provider);
+	public void create(Provider provider) throws DaoException {
+		try {
+			manager.persist(provider);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method create.", e);
+		}
 	}
 
 	@Override
-	public List<Provider> read() {
-		String sqlString = "SELECT p FROM Provider p ORDER BY p.providerName";
-		TypedQuery<Provider> query = manager.createQuery(sqlString, Provider.class);
-		return query.getResultList();
+	public List<Provider> read() throws DaoException {
+		try {
+			String sqlString = "SELECT p FROM Provider p ORDER BY p.providerName";
+			TypedQuery<Provider> query = manager.createQuery(sqlString, Provider.class);
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method read.", e);
+		}
 	}
 
 	@Override
-	public void update(Provider provider) {
-		manager.merge(provider);
+	public void update(Provider provider) throws DaoException {
+		try {
+			manager.merge(provider);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method update.", e);
+		}
 	}
 
 	@Override
-	public void delete(Integer idProvider) {
-		Provider provider = manager.find(Provider.class, idProvider);
-		manager.remove(provider);
+	public void delete(Integer idProvider) throws DaoException {
+		try {
+			Provider provider = manager.find(Provider.class, idProvider);
+			manager.remove(provider);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method delete.", e);
+		}
 	}
 
 	@Override
-	public Provider findById(Integer idProvider) {
-		return manager.find(Provider.class, idProvider);
+	public Provider findById(Integer idProvider) throws DaoException {
+		try {
+			return manager.find(Provider.class, idProvider);
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method findById.", e);
+		}
 	}
 
 	@Override
-	public Provider findByName(String providerName) {
-		CriteriaBuilder cb = manager.getCriteriaBuilder();
-		CriteriaQuery<Provider> nameLikeCriteria = cb.createQuery(Provider.class);
-		Root<Provider> likeProviderRoot = nameLikeCriteria.from(Provider.class);
-		nameLikeCriteria.select(likeProviderRoot);
-		ParameterExpression<String> parameter = cb.parameter(String.class);
-		nameLikeCriteria.where(cb.like(likeProviderRoot.get("providerName"), providerName));
-		return manager.createQuery(nameLikeCriteria).getSingleResult();
+	public Provider findByName(String providerName) throws DaoException {
+		try {
+			CriteriaBuilder cb = manager.getCriteriaBuilder();
+			CriteriaQuery<Provider> nameLikeCriteria = cb.createQuery(Provider.class);
+			Root<Provider> likeProviderRoot = nameLikeCriteria.from(Provider.class);
+			nameLikeCriteria.select(likeProviderRoot);
+			ParameterExpression<String> parameter = cb.parameter(String.class);
+			nameLikeCriteria.where(cb.like(likeProviderRoot.get("providerName"), providerName));
+			return manager.createQuery(nameLikeCriteria).getSingleResult();
+		} catch (Exception e) {
+			throw new DaoException("An error has occurred in class ProviderDaoImpl, method findByName.", e);
+		}
 	}
 
 }

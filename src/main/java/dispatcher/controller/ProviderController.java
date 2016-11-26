@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.entity.Provider;
+import dispatcher.exception.DaoException;
 
 @Controller
 @RequestMapping("/providerController")
@@ -19,7 +20,7 @@ public class ProviderController {
 	private ProviderDaoImpl providerDao;
 
 	@RequestMapping(value = "/providers", method = RequestMethod.GET)
-	public String getProviders(Model model) {
+	public String getProviders(Model model) throws DaoException {
 		List<Provider> providers = providerDao.read();
 		model.addAttribute("providers", providers);
 		return "providersList";
@@ -32,13 +33,14 @@ public class ProviderController {
 	}
 
 	@RequestMapping(value = "/providers/add", method = RequestMethod.POST)
-	public String addingProvider(@ModelAttribute("providerAttribute") Provider provider) {
+	public String addingProvider(@ModelAttribute("providerAttribute") Provider provider) throws DaoException {
 		providerDao.create(provider);
 		return "providersList";
 	}
 
 	@RequestMapping(value = "/providers/delete", method = RequestMethod.GET)
-	public String deleteProvider(@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model) {
+	public String deleteProvider(@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model)
+			throws DaoException {
 		providerDao.delete(idProvider);
 		model.addAttribute("idProvider", idProvider);
 		return "providersList";
@@ -46,14 +48,14 @@ public class ProviderController {
 
 	@RequestMapping(value = "/providers/update", method = RequestMethod.GET)
 	public String showFormOfUpdatingProvider(@RequestParam(value = "idProvider", required = true) Integer idProvider,
-			Model model) {
+			Model model) throws DaoException {
 		model.addAttribute("providerAttribute", providerDao.findById(idProvider));
 		return "formOfUpdatingProvider";
 	}
 
 	@RequestMapping(value = "/providers/update", method = RequestMethod.POST)
 	public String updatingProvider(@ModelAttribute("providerAttribute") Provider provider,
-			@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model) {
+			@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model) throws DaoException {
 		provider.setIdProvider(idProvider);
 		providerDao.update(provider);
 		model.addAttribute("idProvider", idProvider);
@@ -62,7 +64,7 @@ public class ProviderController {
 
 	@RequestMapping(value = "/providers/searchByName", method = RequestMethod.GET)
 	public String searchProviderByName(@RequestParam(value = "providerName", required = true) String providerName,
-			Model model) {
+			Model model) throws DaoException {
 		Provider provider = providerDao.findByName(providerName);
 		model.addAttribute("provider", provider);
 		return "searchProviderByName";
