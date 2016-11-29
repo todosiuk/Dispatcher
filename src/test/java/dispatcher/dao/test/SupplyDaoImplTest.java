@@ -13,6 +13,7 @@ import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.dao.SupplyDaoImpl;
 import dispatcher.entity.Provider;
 import dispatcher.entity.Supply;
+import dispatcher.exception.DaoException;
 
 @ContextConfiguration(locations = { "classpath:applicationContextTest.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +27,7 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testCreateAndReadSupply() {
+	public void testCreateAndReadSupply() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		providerDao.create(p);
@@ -42,7 +43,7 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testUpdateSupply() {
+	public void testUpdateSupply() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		providerDao.create(p);
@@ -59,7 +60,7 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testDeleteSupply() {
+	public void testDeleteSupply() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		providerDao.create(p);
@@ -75,7 +76,7 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testFindById() {
+	public void testFindById() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		providerDao.create(p);
@@ -92,7 +93,7 @@ public class SupplyDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testSearchByCriteria() {
+	public void testSearchByCriteria() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		providerDao.create(p);

@@ -85,6 +85,8 @@
 			<version>4.3.1.RELEASE</version>
 		</dependency>
 
+		<!-- Spring Security -->
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -185,7 +187,6 @@
 			<version>5.2.1.Final</version>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -265,7 +266,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-
-
 </project>
