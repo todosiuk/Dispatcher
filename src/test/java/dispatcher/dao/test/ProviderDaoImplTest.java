@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.entity.Provider;
+import dispatcher.exception.DaoException;
 
 @ContextConfiguration(locations = { "classpath:applicationContextTest.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,7 +23,7 @@ public class ProviderDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testCreateAndReadProvider() {
+	public void testCreateAndReadProvider() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("dksjh");
 		dao.create(p);
@@ -32,7 +33,7 @@ public class ProviderDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testUpdate() {
+	public void testUpdate() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("ส่ๅโ");
 		dao.create(p);
@@ -44,7 +45,7 @@ public class ProviderDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testDelete() {
+	public void testDelete() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("Lviv");
 		dao.create(p);
@@ -55,7 +56,7 @@ public class ProviderDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testFindById() {
+	public void testFindById() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("Lviv");
 		dao.create(p);
@@ -67,7 +68,7 @@ public class ProviderDaoImplTest {
 
 	@Test
 	@Transactional
-	public void testFindByName() {
+	public void testFindByName() throws DaoException {
 		Provider p = new Provider();
 		p.setProviderName("Lviv");
 		dao.create(p);

@@ -61,7 +61,7 @@ public class ProviderControllerTest {
 	public void testAddingProvider() throws Exception {
 		Provider provider = new Provider();
 		provider.setIdProvider(1);
-		provider.setProviderName("Киев");
+		provider.setProviderName("OOO");
 		providerDao.create(provider);
 
 		Mockito.verify(providerDao).create(provider);
@@ -94,10 +94,10 @@ public class ProviderControllerTest {
 	public void testUpdatingProvider() throws Exception {
 		Provider provider = new Provider();
 		provider.setIdProvider(1);
-		provider.setProviderName("Киев");
+		provider.setProviderName("OOO");
 		providerDao.create(provider);
 		provider.setIdProvider(1);
-		provider.setProviderName("Полтава");
+		provider.setProviderName("AAA");
 		providerDao.update(provider);
 
 		Mockito.verify(providerDao).create(provider);
@@ -114,7 +114,7 @@ public class ProviderControllerTest {
 	public void testSearchProviderByName() throws Exception {
 		Provider provider = new Provider();
 		provider.setIdProvider(1);
-		provider.setProviderName("Киев");
+		provider.setProviderName("OOO");
 		providerDao.create(provider);
 		Provider searchProvider = providerDao.findByName(provider.getProviderName());
 
