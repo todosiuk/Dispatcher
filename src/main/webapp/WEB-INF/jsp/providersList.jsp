@@ -9,7 +9,7 @@
 <title>Список поставщиков</title>
 </head>
 <body>
-	<div>
+	<div class="container-fluid" align="center">
 		<c:url var="addProvider" value="/providerController/providers/add" />
 		<h3>
 			<a href="${addProvider}" input type="submit" class="btn btn-primary" />Добавить
@@ -18,13 +18,14 @@
 		<p>
 		<h1>Список поставщиков</h1>
 
-		<table>
-			<thead>
+
+		<table class="table">
+			<thead style="background: #9AC0CD">
 				<tr>
 					<th>Название поставщика</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody style="background: #BFEFFF">
 				<c:forEach items="${providers}" var="provider">
 					<c:url var="addSupply"
 						value="/supplyController/add?id=${provider.idProvider}" />
@@ -36,7 +37,8 @@
 						value="/providerController/providers/searchByName?name=${provider.providerName}" />
 					<tr>
 						<td><a href="searchSupply"><c:out
-									value="${provider.providerName }" /> </a>
+									value="${provider.providerName }" /> </a></td>
+					</tr>
 				</c:forEach>
 			</tbody>
 

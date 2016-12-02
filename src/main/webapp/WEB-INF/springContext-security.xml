@@ -6,21 +6,20 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 	<http auto-config="true">
-
+		<csrf disabled="true" />
 		<intercept-url pattern="/admin" access="ROLE_ADMIN" />
 		<intercept-url pattern="/admin/*" access="ROLE_ADMIN" />
 		<intercept-url pattern="/admin*" access="ROLE_ADMIN" />
 
-		<form-login login-page="/login" default-target-url="/admin"
-			authentication-failure-url="/loginFailed" />
-		<logout logout-success-url="/logOut" />
+		<form-login login-page="/login" authentication-failure-url="/denied"
+			username-parameter="username" password-parameter="password"
+			default-target-url="/loginOk" />
 
 	</http>
 	<authentication-manager>
 		<authentication-provider>
-			<password-encoder hash="sha" />
 			<user-service>
-				<user name="admin" password="123" authorities="ROLE_ADMIN" />
+				<user name="admin" password="admin" authorities="ROLE_ADMIN" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
