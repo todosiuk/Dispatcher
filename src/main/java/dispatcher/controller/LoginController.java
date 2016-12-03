@@ -12,12 +12,7 @@ public class LoginController {
 	public String home() {
 		return "loginForm";
 	}
-
-	@RequestMapping(value = "/loginOk", method = RequestMethod.GET)
-	public String login() {
-		return "providersList";
-	}
-
+	
 	@RequestMapping(value = "/denied", method = RequestMethod.GET)
 	public String loginError() {
 		return "deniedPage";

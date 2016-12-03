@@ -13,7 +13,7 @@
 
 		<form-login login-page="/login" authentication-failure-url="/denied"
 			username-parameter="username" password-parameter="password"
-			default-target-url="/loginOk" />
+			default-target-url="/providerController/providers" />
 
 	</http>
 	<authentication-manager>

@@ -68,7 +68,7 @@ public class SupplyController {
 		return "success";
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/searchForm", method = RequestMethod.GET)
 	public String showSearchForm(@RequestParam(value = "idProvider", required = true) Integer idProvider, Model model)
 			throws DaoException {
 		Supply supply = new Supply();

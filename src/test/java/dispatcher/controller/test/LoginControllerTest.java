@@ -34,11 +34,6 @@ public class LoginControllerTest {
 	}
 
 	@Test
-	public void testLoginOk() throws Exception {
-		mockMvc.perform(get("/loginOk")).andExpect(status().isOk()).andExpect(view().name("providersList"));
-	}
-
-	@Test
 	public void testLoginError() throws Exception {
 		mockMvc.perform(get("/denied")).andExpect(status().isOk())
 				.andExpect(view().name("deniedPage"));
