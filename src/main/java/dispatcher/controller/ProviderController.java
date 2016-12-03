@@ -33,9 +33,10 @@ public class ProviderController {
 	}
 
 	@RequestMapping(value = "/providers/add", method = RequestMethod.POST)
-	public String addingProvider(@ModelAttribute("providerAttribute") Provider provider) throws DaoException {
+	public String addingProvider(@ModelAttribute("providerAttribute") Provider provider, Model model) throws DaoException {
 		providerDao.create(provider);
-		return "providersList";
+		model.addAttribute("msg", "Вы успешно добавили поставщика " + provider.getProviderName());
+		return "success";
 	}
 
 	@RequestMapping(value = "/providers/delete", method = RequestMethod.GET)
@@ -43,7 +44,8 @@ public class ProviderController {
 			throws DaoException {
 		providerDao.delete(idProvider);
 		model.addAttribute("idProvider", idProvider);
-		return "providersList";
+		model.addAttribute("msg", "Вы успешно удалили поставщика");
+		return "success";
 	}
 
 	@RequestMapping(value = "/providers/update", method = RequestMethod.GET)

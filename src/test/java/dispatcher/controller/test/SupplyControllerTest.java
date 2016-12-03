@@ -180,7 +180,7 @@ public class SupplyControllerTest {
 		supply.setIdSupply(1);
 		supply.setArrivalDate(LocalDate.of(2014, Month.DECEMBER, 12));
 
-		mockMvc.perform(get("/supplyController/search").param("idProvider", provider.getIdProvider().toString()))
+		mockMvc.perform(get("/supplyController/searchForm").param("idProvider", provider.getIdProvider().toString()))
 				.andExpect(status().isOk()).andExpect(view().name("formOfSearch"))
 				.andExpect(model().attribute("idProvider", provider.getIdProvider()));
 	}

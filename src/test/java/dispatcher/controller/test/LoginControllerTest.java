@@ -34,19 +34,14 @@ public class LoginControllerTest {
 	}
 
 	@Test
-	public void testLogin() throws Exception {
-		mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("loginForm"));
-	}
-
-	@Test
 	public void testLoginError() throws Exception {
-		mockMvc.perform(get("/loginFailed")).andExpect(status().isOk())
-				.andExpect(view().name("loginForm")).andExpect(model().attributeExists("error"));
+		mockMvc.perform(get("/denied")).andExpect(status().isOk())
+				.andExpect(view().name("deniedPage"));
 	}
 
 	@Test
 	public void testLogOut() throws Exception {
-		mockMvc.perform(get("/logOut")).andExpect(status().isOk()).andExpect(view().name("loginForm"));
+		mockMvc.perform(get("/logOut")).andExpect(status().isOk()).andExpect(view().name("logOutPage"));
 	}
 
 }
