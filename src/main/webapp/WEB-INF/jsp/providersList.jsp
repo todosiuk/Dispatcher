@@ -31,7 +31,7 @@
 					<c:url var="addSupply"
 						value="/supplyController/add?id=${provider.idProvider}" />
 					<c:url var="editProvider"
-						value="/providerController/providers/update?id=${provider.idProvider}" />
+						value="/providerController/providers/update?idProvider=${provider.idProvider}" />
 					<c:url var="deleteProvider"
 						value="/providerController/providers/delete?idProvider=${provider.idProvider}" />
 					<c:url var="searchProviderByName"

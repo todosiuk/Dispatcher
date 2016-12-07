@@ -67,7 +67,8 @@ public class ProviderControllerTest {
 		Mockito.verify(providerDao).create(provider);
 
 		mockMvc.perform(post("/providerController/providers/add")).andExpect(status().isOk())
-				.andExpect(view().name("providersList")).andExpect(model().attributeExists("providerAttribute"));
+				.andExpect(view().name("success")).andExpect(model().attributeExists("providerAttribute"))
+				.andExpect(model().attributeExists("msg"));
 	}
 
 	@Test
@@ -78,8 +79,8 @@ public class ProviderControllerTest {
 		Mockito.verify(providerDao).delete(idProvider);
 
 		mockMvc.perform(get("/providerController/providers/delete").param("idProvider", idProvider.toString()))
-				.andExpect(status().isOk()).andExpect(view().name("providersList"))
-				.andExpect(model().attribute("idProvider", idProvider));
+				.andExpect(status().isOk()).andExpect(view().name("success"))
+				.andExpect(model().attribute("idProvider", idProvider)).andExpect(model().attributeExists("msg"));
 	}
 
 	@Test
@@ -105,9 +106,9 @@ public class ProviderControllerTest {
 
 		mockMvc.perform(
 				post("/providerController/providers/update").param("idProvider", provider.getIdProvider().toString()))
-				.andExpect(status().isOk()).andExpect(view().name("providersList"))
+				.andExpect(status().isOk()).andExpect(view().name("success"))
 				.andExpect(model().attribute("idProvider", provider.getIdProvider()))
-				.andExpect(model().attributeExists("providerAttribute"));
+				.andExpect(model().attributeExists("providerAttribute")).andExpect(model().attributeExists("msg"));
 	}
 
 	@Test
