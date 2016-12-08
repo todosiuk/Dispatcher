@@ -10,7 +10,7 @@
 <title>Обновление поставщика</title>
 </head>
 <body>
-<div  class="container-fluid" align="center">
+<div class="container-fluid" align="center">
 	<h1>Обновление данных поставщика</h1>
 	<c:url var="saveUrl"
 		value="update?idProvider=${providerAttribute.idProvider}" />

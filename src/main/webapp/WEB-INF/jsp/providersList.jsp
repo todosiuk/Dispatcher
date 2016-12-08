@@ -10,6 +10,7 @@
 <title>Список поставщиков</title>
 </head>
 <body>
+<a href="<c:url value="/logout" />">Выйти</a>
 	<div class="container-fluid" align="center">
 		<c:url var="addProvider" value="/providerController/providers/add" />
 		<h3>
@@ -29,7 +30,7 @@
 			<tbody>
 				<c:forEach items="${providers}" var="provider">
 					<c:url var="addSupply"
-						value="/supplyController/add?id=${provider.idProvider}" />
+						value="/supplyController/add?idProvider=${provider.idProvider}" />
 					<c:url var="editProvider"
 						value="/providerController/providers/update?idProvider=${provider.idProvider}" />
 					<c:url var="deleteProvider"

@@ -22,7 +22,7 @@ import dispatcher.entity.Supply;
 import dispatcher.exception.DaoException;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor=DaoException.class, noRollbackFor=Exception.class)
 public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 
 	@PersistenceContext

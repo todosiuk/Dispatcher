@@ -14,6 +14,8 @@
 		<form-login login-page="/login" authentication-failure-url="/denied"
 			username-parameter="username" password-parameter="password"
 			default-target-url="/providerController/providers" />
+			<logout invalidate-session="true" logout-success-url="/logout"
+			logout-url="/logOut" />
 
 	</http>
 	<authentication-manager>

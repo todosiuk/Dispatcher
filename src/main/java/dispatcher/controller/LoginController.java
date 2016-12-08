@@ -18,7 +18,7 @@ public class LoginController {
 		return "deniedPage";
 	}
 
-	@RequestMapping(value = "/logOut", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logOut() {
 		return "logOutPage";
 	}
