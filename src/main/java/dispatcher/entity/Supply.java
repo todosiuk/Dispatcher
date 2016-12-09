@@ -67,7 +67,7 @@ public class Supply implements Serializable {
 	@Column(name = "department")
 	private String department;
 
-	@Column(name = "arrivalDate", columnDefinition = "DATETIME")
+	@Column(name = "arrivalDate", columnDefinition = "TIMESTAMP")
 	private LocalDate arrivalDate;
 
 	@Column(name = "storekeeper")
