@@ -106,7 +106,7 @@ public class SupplyDaoImplTest {
 		int idProvider = p.getIdProvider();
 		supplyDao.create(idProvider, s);
 		supplyDao.create(idProvider, s1);
-		List<Supply> search = supplyDao.searchByCriteria("80", "AA2834CA", null, null, idProvider);
+		List<Supply> search = supplyDao.searchByCriteria("80", "AA2834CA", null, idProvider);
 		Assert.assertEquals(search.size(), 1);
 		Assert.assertEquals(search.get(0).getCarNumber(), "AA2834CA");
 		Assert.assertEquals("ส่ๅโ", search.get(0).getProvider().getProviderName());

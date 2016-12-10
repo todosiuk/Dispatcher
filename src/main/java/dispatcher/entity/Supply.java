@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @Entity
 @Table(name = "supply")
 public class Supply implements Serializable {
@@ -67,7 +70,8 @@ public class Supply implements Serializable {
 	@Column(name = "department")
 	private String department;
 
-	@Column(name = "arrivalDate", columnDefinition = "TIMESTAMP")
+	@Column(name = "arrivalDate", columnDefinition = "DATETIME")
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate arrivalDate;
 
 	@Column(name = "storekeeper")

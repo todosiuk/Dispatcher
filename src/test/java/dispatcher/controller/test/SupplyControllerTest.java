@@ -182,7 +182,7 @@ public class SupplyControllerTest {
 
 		mockMvc.perform(get("/supplyController/searchForm").param("idProvider", provider.getIdProvider().toString()))
 				.andExpect(status().isOk()).andExpect(view().name("formOfSearch"))
-				.andExpect(model().attribute("idProvider", provider.getIdProvider()));
+				.andExpect(model().attributeExists("supplyAttribute"));
 	}
 
 	@Test
@@ -205,20 +205,18 @@ public class SupplyControllerTest {
 		supply.setArrivalDate(LocalDate.of(2014, Month.DECEMBER, 12));
 
 		supplyDao.searchByCriteria(supply.getCarNumber(), supply.getDepartment(), supply.getArrivalDate(),
-				supply.getArrivalDate(), supply.getProvider().getIdProvider());
+				supply.getProvider().getIdProvider());
 
 		Mockito.verify(supplyDao).searchByCriteria(supply.getCarNumber(), supply.getDepartment(),
-				supply.getArrivalDate(), supply.getArrivalDate(), supply.getProvider().getIdProvider());
+				supply.getArrivalDate(), supply.getProvider().getIdProvider());
 
 		mockMvc.perform(post("/supplyController/search").param("idProvider", provider.getIdProvider().toString())
 				.param("department", supply.getDepartment()).param("carNumber", supply.getCarNumber())
-				.param("startDate", supply.getArrivalDate().toString())
-				.param("endDate", supply.getArrivalDate().toString())).andExpect(status().isOk())
+				.param("arrivalDate", supply.getArrivalDate().toString())).andExpect(status().isOk())
 				.andExpect(view().name("searchList")).andExpect(model().attributeExists("supplyAttribute"))
-				.andExpect(model().attribute("supply",
+				.andExpect(model().attribute("supplyAttribute",
 						supplyDao.searchByCriteria(supply.getCarNumber(), supply.getDepartment(),
-								supply.getArrivalDate(), supply.getArrivalDate(),
-								supply.getProvider().getIdProvider())));
+								supply.getArrivalDate(), supply.getProvider().getIdProvider())));
 	}
 
 }

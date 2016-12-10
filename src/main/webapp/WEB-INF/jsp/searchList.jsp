@@ -25,21 +25,19 @@
 				<th>Кладовщик</th>
 				<th>Диспетчер</th>
 			</thead>
-			
+
 			<tbody>
-			<c:forEach items="${list}" var="provider">
-			<tr>
-			<td>
-			<c:out value = "${ }"
-			</td>
-			
-			
-			
-			</tr>
-			
-			
-			
-			</c:forEach>
+				<c:forEach items="${list}" var="list">
+					<tr>
+						<td><c:out value="${list.arrivalDate }" /></td>
+
+
+
+					</tr>
+
+
+
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

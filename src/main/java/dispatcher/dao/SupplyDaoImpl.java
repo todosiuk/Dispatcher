@@ -22,7 +22,7 @@ import dispatcher.entity.Supply;
 import dispatcher.exception.DaoException;
 
 @Repository
-@Transactional(rollbackFor=DaoException.class, noRollbackFor=Exception.class)
+@Transactional(rollbackFor = DaoException.class, noRollbackFor = Exception.class)
 public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 
 	@PersistenceContext
@@ -79,8 +79,8 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 	}
 
 	@Override
-	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate startDate, LocalDate endDate,
-			Integer idProvider) throws DaoException {
+	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate date, Integer idProvider)
+			throws DaoException {
 		try {
 			CriteriaBuilder cb = manager.getCriteriaBuilder();
 			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
@@ -92,15 +92,16 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 			if (carNumber != null) {
 				predicates.add(cb.like(root.get("carNumber"), carNumber));
 			}
-			if (startDate != null) {
-				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
+			if (date != null) {
+				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), date, date));
 			}
 			if (idProvider != null) {
 				predicates.add(cb.equal(root.get("provider"), idProvider));
 			}
 			Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
 			query.select(root).where(predicatesarr);
-			return manager.createQuery(query).getResultList();
+			List<Supply> list = manager.createQuery(query).getResultList();
+			return list;
 		} catch (Exception e) {
 			throw new DaoException("An error has occurred in class SupplyDaoImpl, method searchByCriteria.", e);
 		}

@@ -37,12 +37,12 @@
 
 				<tr>
 					<td><form:label class="control-label" path="arrivalDate">Дата прихода от:</form:label></td>
-					<td><form:input path="arrivalDate" /></td>
+					<td><form:input type="date" path="arrivalDate" /></td>
 				</tr>
 
 				<tr>
 					<td><form:label class="control-label" path="arrivalDate">Дата прихода до:</form:label></td>
-					<td><form:input path="arrivalDate" /></td>
+					<td><form:input type="date" path="arrivalDate" /></td>
 				</tr>
 			</table>
 			<br>

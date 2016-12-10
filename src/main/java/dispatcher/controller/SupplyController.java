@@ -38,6 +38,7 @@ public class SupplyController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addingSupply(@RequestParam(value = "idProvider", required = true) Integer idProvider,
 			@ModelAttribute("supplyAttribute") Supply supply, Model model) throws DaoException {
+		supply.setArrivalDate(LocalDate.now());
 		supplyDao.create(idProvider, supply);
 		model.addAttribute("msg", "Поставка успешно добавлена");
 		return "success";
@@ -82,11 +83,11 @@ public class SupplyController {
 	public String search(@RequestParam(value = "idProvider", required = true) Integer idProvider,
 			@RequestParam(value = "department", required = true) String department,
 			@RequestParam(value = "carNumber", required = true) String carNumber,
-			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
-			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
+			//@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate date,
+			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate date,
 			@ModelAttribute("supplyAttribute") Supply supply, Model model) throws DaoException {
-		List<Supply> list = supplyDao.searchByCriteria(department, carNumber, startDate, endDate, idProvider);
-		model.addAttribute("supply", list);
+		List<?> listSupply = supplyDao.searchByCriteria(department, carNumber, date, idProvider);
+		model.addAttribute("supplyAttribute", listSupply);
 		return "searchList";
 	}
 
