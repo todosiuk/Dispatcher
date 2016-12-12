@@ -83,11 +83,11 @@ public class SupplyController {
 	public String search(@RequestParam(value = "idProvider", required = true) Integer idProvider,
 			@RequestParam(value = "department", required = true) String department,
 			@RequestParam(value = "carNumber", required = true) String carNumber,
-			//@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate date,
-			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate date,
+			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@ModelAttribute("supplyAttribute") Supply supply, Model model) throws DaoException {
-		List<?> listSupply = supplyDao.searchByCriteria(department, carNumber, date, idProvider);
-		model.addAttribute("supplyAttribute", listSupply);
+		List<Supply> list = this.supplyDao.searchByCriteria(idProvider, department, carNumber, startDate, endDate);
+		model.addAttribute("searchAttribute", list);
 		return "searchList";
 	}
 

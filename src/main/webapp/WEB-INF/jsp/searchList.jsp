@@ -27,17 +27,31 @@
 			</thead>
 
 			<tbody>
-				<c:forEach items="${list}" var="list">
-					<tr>
-						<td><c:out value="${list.arrivalDate }" /></td>
+				
+				
+				
+					
+						<tr>
+						
+							<td>${list.department }</td>
+							
+							
 
 
 
-					</tr>
+
+
+						</tr>
 
 
 
-				</c:forEach>
+
+
+
+
+
+					
+				
 			</tbody>
 		</table>
 	</div>

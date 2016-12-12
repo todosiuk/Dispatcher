@@ -48,5 +48,6 @@
 			<br>
 			<input value="Найти" input type="submit" class="btn btn-primary" />
 		</form:form>
+	</div>
 </body>
 </html>

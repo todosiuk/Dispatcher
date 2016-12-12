@@ -79,29 +79,30 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 	}
 
 	@Override
-	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate date, Integer idProvider)
-			throws DaoException {
+	public List<Supply> searchByCriteria(Integer idProvider, String department, String carNumber, LocalDate startDate,
+			LocalDate endDate) throws DaoException {
 		try {
 			CriteriaBuilder cb = manager.getCriteriaBuilder();
 			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
 			Root<Supply> root = query.from(Supply.class);
 			List<Predicate> predicates = new ArrayList<Predicate>();
+			if (idProvider != null) {
+				predicates.add(cb.equal(root.get("provider"), idProvider));
+			}
 			if (department != null) {
 				predicates.add(cb.like(root.get("department"), department));
 			}
 			if (carNumber != null) {
 				predicates.add(cb.like(root.get("carNumber"), carNumber));
 			}
-			if (date != null) {
-				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), date, date));
-			}
-			if (idProvider != null) {
-				predicates.add(cb.equal(root.get("provider"), idProvider));
+			if (startDate != null) {
+				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
 			}
 			Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
 			query.select(root).where(predicatesarr);
-			List<Supply> list = manager.createQuery(query).getResultList();
-			return list;
+
+			return manager.createQuery(query).getResultList();
+
 		} catch (Exception e) {
 			throw new DaoException("An error has occurred in class SupplyDaoImpl, method searchByCriteria.", e);
 		}

@@ -23,6 +23,6 @@ public interface SupplyDao<T, Id extends Serializable> {
 
 	public Supply findById(Integer idSupply) throws DaoException;
 
-	public List<T> searchByCriteria(String department, String carNumber, LocalDate date, Integer idProvider)
-			throws DaoException;
+	public List<T> searchByCriteria(Integer idProvider,String department, String carNumber, LocalDate startDate, LocalDate endDate
+			) throws DaoException;
 }
