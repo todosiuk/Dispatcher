@@ -182,7 +182,7 @@ public class SupplyControllerTest {
 
 		mockMvc.perform(get("/supplyController/searchForm").param("idProvider", provider.getIdProvider().toString()))
 				.andExpect(status().isOk()).andExpect(view().name("formOfSearch"))
-				.andExpect(model().attributeExists("supplyAttribute"));
+				.andExpect(model().attributeExists("idAttribute"));
 	}
 
 	@Test
@@ -213,10 +213,7 @@ public class SupplyControllerTest {
 		mockMvc.perform(post("/supplyController/search").param("idProvider", provider.getIdProvider().toString())
 				.param("department", supply.getDepartment()).param("carNumber", supply.getCarNumber())
 				.param("arrivalDate", supply.getArrivalDate().toString())).andExpect(status().isOk())
-				.andExpect(view().name("searchList")).andExpect(model().attributeExists("supplyAttribute"))
-				.andExpect(model().attribute("supplyAttribute",
-						supplyDao.searchByCriteria(supply.getProvider().getIdProvider(), supply.getCarNumber(),
-								supply.getDepartment(), supply.getArrivalDate(), supply.getArrivalDate())));
+				.andExpect(view().name("searchList"));					
 	}
 
 }

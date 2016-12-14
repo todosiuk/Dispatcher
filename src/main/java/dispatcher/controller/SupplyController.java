@@ -1,12 +1,17 @@
 package dispatcher.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,19 +80,21 @@ public class SupplyController {
 			throws DaoException {
 		Supply supply = new Supply();
 		supply.setProvider(providerDao.findById(idProvider));
-		model.addAttribute("supplyAttribute", supply);
+		model.addAttribute("idAttribute", supply);
 		return "formOfSearch";
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String search(@RequestParam(value = "idProvider", required = true) Integer idProvider,
-			@RequestParam(value = "department", required = true) String department,
-			@RequestParam(value = "carNumber", required = true) String carNumber,
-			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
-			@RequestParam(value = "arrivalDate", required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
-			@ModelAttribute("supplyAttribute") Supply supply, Model model) throws DaoException {
-		List<Supply> list = this.supplyDao.searchByCriteria(idProvider, department, carNumber, startDate, endDate);
-		model.addAttribute("searchAttribute", list);
+			@RequestParam(value = "department", required = false) String department,
+			@RequestParam(value = "carNumber", required = false) String carNumber,
+			@RequestParam(value = "arrivalDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam(value = "arrivalDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
+			@ModelAttribute("idAttribute") Supply supply, Model model) throws DaoException {
+
+		List<Supply> supplyList = supplyDao.searchByCriteria(idProvider, department, carNumber, startDate, endDate);
+		model.addAttribute("supplyList", supplyList);
+
 		return "searchList";
 	}
 
