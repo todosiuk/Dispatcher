@@ -84,22 +84,27 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 		try {
 			CriteriaBuilder cb = manager.getCriteriaBuilder();
 			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-			Root<Supply> root = query.from(Supply.class);
+			Root<Supply> supplyRoot = query.from(Supply.class);
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			if (idProvider != null) {
-				predicates.add(cb.equal(root.get("provider"), idProvider));
+				predicates.add(cb.equal(supplyRoot.get("provider").get("idProvider"), idProvider));
 			}
 			if (department != null) {
-				predicates.add(cb.like(root.get("department"), department));
+				predicates.add(cb.like(supplyRoot.get("department"), department));
 			}
 			if (carNumber != null) {
-				predicates.add(cb.like(root.get("carNumber"), carNumber));
+				predicates.add(cb.like(supplyRoot.get("carNumber"), carNumber));
 			}
 			if (startDate != null) {
-				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
+				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), startDate, endDate));
 			}
-			Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-			query.select(root).where(predicatesarr);
+			if (endDate != null) {
+				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), endDate, startDate));
+			}
+			query.select(supplyRoot).where(predicates.toArray(new Predicate[predicates.size()]));
+
+			// Predicate[] predicatesarr = predicates.toArray(new
+			// Predicate[predicates.size()]);
 
 			return manager.createQuery(query).getResultList();
 

@@ -85,11 +85,11 @@ public class SupplyController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(@RequestParam(value = "idProvider", required = true) Integer idProvider,
-			@RequestParam(value = "department", required = false) String department,
-			@RequestParam(value = "carNumber", required = false) String carNumber,
-			@RequestParam(value = "arrivalDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
-			@RequestParam(value = "arrivalDate", required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
+	public String search(@RequestParam Integer idProvider,
+			@RequestParam String department,
+			@RequestParam String carNumber,
+			@RequestParam ("arrivalDate")@DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@ModelAttribute("idAttribute") Supply supply, Model model) throws DaoException {
 
 		List<Supply> supplyList = supplyDao.searchByCriteria(idProvider, department, carNumber, startDate, endDate);
