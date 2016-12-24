@@ -2,6 +2,8 @@ package dispatcher.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -148,14 +150,6 @@ public class Supply implements Serializable {
 		this.department = department;
 	}
 
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(LocalDate arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
-
 	public String getStorekeeper() {
 		return storekeeper;
 	}
@@ -180,10 +174,19 @@ public class Supply implements Serializable {
 		this.provider = provider;
 	}
 
+	public LocalDate getarrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setarrivalDate(LocalDate arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+
 		result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
 		result = prime * result + ((carNumber == null) ? 0 : carNumber.hashCode());
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
@@ -275,7 +278,7 @@ public class Supply implements Serializable {
 	public String toString() {
 		return "Supply [idSupply=" + idSupply + ", carNumber=" + carNumber + ", driverName=" + driverName + ", phone="
 				+ phone + ", product=" + product + ", vendorDocument=" + vendorDocument + ", documentReceiving="
-				+ documentReceiving + ", department=" + department + ", arrivalDate=" + arrivalDate + ", storekeeper="
+				+ documentReceiving + ", department=" + department + ", arrivalDate=" + arrivalDate + ",storekeeper="
 				+ storekeeper + ", dispatcher=" + dispatcher + ", provider=" + provider + "]";
 	}
 }

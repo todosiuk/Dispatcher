@@ -2,6 +2,7 @@ package dispatcher.dao;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +24,6 @@ public interface SupplyDao<T, Id extends Serializable> {
 
 	public Supply findById(Integer idSupply) throws DaoException;
 
-	public List<T> searchByCriteria(Integer idProvider,String department, String carNumber, LocalDate startDate, LocalDate endDate
-			) throws DaoException;
+	public List<T> searchByCriteria(Integer idProvider, String department, String carNumber, LocalDate startDate,
+			LocalDate endDate) throws DaoException;
 }

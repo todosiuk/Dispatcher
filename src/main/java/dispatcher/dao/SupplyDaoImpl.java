@@ -2,15 +2,18 @@ package dispatcher.dao;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ListJoin;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
@@ -84,28 +87,21 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 		try {
 			CriteriaBuilder cb = manager.getCriteriaBuilder();
 			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-			Root<Supply> supplyRoot = query.from(Supply.class);
+			Root<Supply> supplyRoot = query.from(manager.getMetamodel().entity(Supply.class));
 			List<Predicate> predicates = new ArrayList<Predicate>();
 			if (idProvider != null) {
 				predicates.add(cb.equal(supplyRoot.get("provider").get("idProvider"), idProvider));
 			}
-			if (department != null) {
+			if (department != null && !department.isEmpty()) {
 				predicates.add(cb.like(supplyRoot.get("department"), department));
 			}
-			if (carNumber != null) {
+			if (carNumber != null && !carNumber.isEmpty()) {
 				predicates.add(cb.like(supplyRoot.get("carNumber"), carNumber));
 			}
-			if (startDate != null) {
+			if (startDate != null && endDate != null) {
 				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), startDate, endDate));
 			}
-			if (endDate != null) {
-				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), endDate, startDate));
-			}
 			query.select(supplyRoot).where(predicates.toArray(new Predicate[predicates.size()]));
-
-			// Predicate[] predicatesarr = predicates.toArray(new
-			// Predicate[predicates.size()]);
-
 			return manager.createQuery(query).getResultList();
 
 		} catch (Exception e) {
