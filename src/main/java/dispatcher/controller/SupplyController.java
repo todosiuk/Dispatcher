@@ -43,7 +43,7 @@ public class SupplyController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addingSupply(@RequestParam(value = "idProvider", required = true) Integer idProvider,
 			@ModelAttribute("supplyAttribute") Supply supply, Model model) throws DaoException {
-		supply.setarrivalDate(LocalDate.now());
+		supply.setArrivalDate(LocalDate.now());
 		supplyDao.create(idProvider, supply);
 		model.addAttribute("msg", "Поставка успешно добавлена");
 		return "success";

@@ -94,7 +94,7 @@ public class SupplyDaoImplTest {
 	@Test
 	@Transactional
 	public void testSearchByCriteria() throws DaoException {
-		Provider p = new Provider();
+		/*Provider p = new Provider();
 		p.setProviderName("Киев");
 		providerDao.create(p);
 		Supply s = new Supply("AA2630CA", "Саша", "067-569-95-89", "Ламинат", "РН2654", "ПЗК-2655", "80",
@@ -105,10 +105,11 @@ public class SupplyDaoImplTest {
 		s1.setProvider(p);
 		int idProvider = p.getIdProvider();
 		supplyDao.create(idProvider, s);
-		supplyDao.create(idProvider, s1);
-		List<Supply> search = supplyDao.searchByCriteria(idProvider,"80", "AA2834CA", null, null);
-		Assert.assertEquals(search.size(), 1);
-		Assert.assertEquals(search.get(0).getCarNumber(), "AA2834CA");
-		Assert.assertEquals("Киев", search.get(0).getProvider().getProviderName());
+		supplyDao.create(idProvider, s1);**/
+		List<Supply> search = supplyDao.searchByCriteria(298, null, null, LocalDate.of(2016, 12, 14), LocalDate.of(2016, 12, 24));
+		Assert.assertEquals(search.size(), 3);
+		
+		//Assert.assertEquals(search.get(0).getCarNumber(), "AA2630CA");
+		//Assert.assertEquals("Киев", search.get(0).getProvider().getProviderName());
 	}
 }

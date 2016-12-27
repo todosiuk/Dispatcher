@@ -98,10 +98,15 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 			if (carNumber != null && !carNumber.isEmpty()) {
 				predicates.add(cb.like(supplyRoot.get("carNumber"), carNumber));
 			}
-			if (startDate != null && endDate != null) {
-				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), startDate, endDate));
+			if (startDate != null) {
+				predicates.add(cb.greaterThanOrEqualTo(supplyRoot.<LocalDate>get("arrivalDate"), startDate));
+			} else if (endDate != null) {
+				predicates.add(cb.lessThanOrEqualTo(supplyRoot.<LocalDate>get("arrivalDate"), endDate));
+			} else {
+				predicates.add(cb.between(supplyRoot.<LocalDate>get("arrivalDate"), startDate, endDate));
 			}
-			query.select(supplyRoot).where(predicates.toArray(new Predicate[predicates.size()]));
+			query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+			query.select(supplyRoot);
 			return manager.createQuery(query).getResultList();
 
 		} catch (Exception e) {

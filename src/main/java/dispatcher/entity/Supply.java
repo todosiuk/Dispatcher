@@ -174,11 +174,11 @@ public class Supply implements Serializable {
 		this.provider = provider;
 	}
 
-	public LocalDate getarrivalDate() {
+	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
 
-	public void setarrivalDate(LocalDate arrivalDate) {
+	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 
