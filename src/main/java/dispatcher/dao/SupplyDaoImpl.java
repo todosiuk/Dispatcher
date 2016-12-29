@@ -1,6 +1,7 @@
 package dispatcher.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -98,15 +99,21 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 			if (carNumber != null && !carNumber.isEmpty()) {
 				predicates.add(cb.like(supplyRoot.get("carNumber"), carNumber));
 			}
-			if (startDate != null) {
-				predicates.add(cb.greaterThanOrEqualTo(supplyRoot.<LocalDate>get("arrivalDate"), startDate));
-			} else if (endDate != null) {
-				predicates.add(cb.lessThanOrEqualTo(supplyRoot.<LocalDate>get("arrivalDate"), endDate));
-			} else {
-				predicates.add(cb.between(supplyRoot.<LocalDate>get("arrivalDate"), startDate, endDate));
+			if (startDate != null && endDate != null) {
+				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate),
+						cb.literal(endDate)));
+
+			} else if (startDate != null && endDate == null) {
+				predicates
+						.add(cb.greaterThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate)));
+
+			} else if (startDate == null && endDate != null) {
+				predicates.add(cb.lessThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(endDate)));
 			}
-			query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
-			query.select(supplyRoot);
+			if (!predicates.isEmpty()) {
+				query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+				query.select(supplyRoot);
+			}
 			return manager.createQuery(query).getResultList();
 
 		} catch (Exception e) {
