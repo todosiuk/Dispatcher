@@ -2,6 +2,8 @@ package dispatcher.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "supply")
@@ -68,6 +73,7 @@ public class Supply implements Serializable {
 	private String department;
 
 	@Column(name = "arrivalDate", columnDefinition = "DATETIME")
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate arrivalDate;
 
 	@Column(name = "storekeeper")
@@ -144,14 +150,6 @@ public class Supply implements Serializable {
 		this.department = department;
 	}
 
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
-	}
-
-	public void setArrivalDate(LocalDate arrivalDate) {
-		this.arrivalDate = arrivalDate;
-	}
-
 	public String getStorekeeper() {
 		return storekeeper;
 	}
@@ -176,10 +174,19 @@ public class Supply implements Serializable {
 		this.provider = provider;
 	}
 
+	public LocalDate getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(LocalDate arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+
 		result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
 		result = prime * result + ((carNumber == null) ? 0 : carNumber.hashCode());
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
@@ -271,7 +278,7 @@ public class Supply implements Serializable {
 	public String toString() {
 		return "Supply [idSupply=" + idSupply + ", carNumber=" + carNumber + ", driverName=" + driverName + ", phone="
 				+ phone + ", product=" + product + ", vendorDocument=" + vendorDocument + ", documentReceiving="
-				+ documentReceiving + ", department=" + department + ", arrivalDate=" + arrivalDate + ", storekeeper="
+				+ documentReceiving + ", department=" + department + ", arrivalDate=" + arrivalDate + ",storekeeper="
 				+ storekeeper + ", dispatcher=" + dispatcher + ", provider=" + provider + "]";
 	}
 }

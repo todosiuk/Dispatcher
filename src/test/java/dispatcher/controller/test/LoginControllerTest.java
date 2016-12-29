@@ -41,7 +41,7 @@ public class LoginControllerTest {
 
 	@Test
 	public void testLogOut() throws Exception {
-		mockMvc.perform(get("/logOut")).andExpect(status().isOk()).andExpect(view().name("logOutPage"));
+		mockMvc.perform(get("/logout")).andExpect(status().isOk()).andExpect(view().name("logOutPage"));
 	}
 
 }

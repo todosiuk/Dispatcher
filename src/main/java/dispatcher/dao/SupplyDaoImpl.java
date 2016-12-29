@@ -1,16 +1,20 @@
 package dispatcher.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ListJoin;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
@@ -22,7 +26,7 @@ import dispatcher.entity.Supply;
 import dispatcher.exception.DaoException;
 
 @Repository
-@Transactional
+@Transactional(rollbackFor = DaoException.class, noRollbackFor = Exception.class)
 public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 
 	@PersistenceContext
@@ -79,28 +83,39 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 	}
 
 	@Override
-	public List<Supply> searchByCriteria(String department, String carNumber, LocalDate startDate, LocalDate endDate,
-			Integer idProvider) throws DaoException {
+	public List<Supply> searchByCriteria(Integer idProvider, String department, String carNumber, LocalDate startDate,
+			LocalDate endDate) throws DaoException {
 		try {
 			CriteriaBuilder cb = manager.getCriteriaBuilder();
 			CriteriaQuery<Supply> query = cb.createQuery(Supply.class);
-			Root<Supply> root = query.from(Supply.class);
+			Root<Supply> supplyRoot = query.from(manager.getMetamodel().entity(Supply.class));
 			List<Predicate> predicates = new ArrayList<Predicate>();
-			if (department != null) {
-				predicates.add(cb.like(root.get("department"), department));
-			}
-			if (carNumber != null) {
-				predicates.add(cb.like(root.get("carNumber"), carNumber));
-			}
-			if (startDate != null) {
-				predicates.add(cb.between(root.<LocalDate> get("arrivalDate"), startDate, endDate));
-			}
 			if (idProvider != null) {
-				predicates.add(cb.equal(root.get("provider"), idProvider));
+				predicates.add(cb.equal(supplyRoot.get("provider").get("idProvider"), idProvider));
 			}
-			Predicate[] predicatesarr = predicates.toArray(new Predicate[predicates.size()]);
-			query.select(root).where(predicatesarr);
+			if (department != null && !department.isEmpty()) {
+				predicates.add(cb.like(supplyRoot.get("department"), department));
+			}
+			if (carNumber != null && !carNumber.isEmpty()) {
+				predicates.add(cb.like(supplyRoot.get("carNumber"), carNumber));
+			}
+			if (startDate != null && endDate != null) {
+				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate),
+						cb.literal(endDate)));
+
+			} else if (startDate != null && endDate == null) {
+				predicates
+						.add(cb.greaterThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate)));
+
+			} else if (startDate == null && endDate != null) {
+				predicates.add(cb.lessThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(endDate)));
+			}
+			if (!predicates.isEmpty()) {
+				query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+				query.select(supplyRoot);
+			}
 			return manager.createQuery(query).getResultList();
+
 		} catch (Exception e) {
 			throw new DaoException("An error has occurred in class SupplyDaoImpl, method searchByCriteria.", e);
 		}
