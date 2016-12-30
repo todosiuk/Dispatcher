@@ -102,11 +102,9 @@ public class SupplyDaoImpl implements SupplyDao<Supply, String> {
 			if (startDate != null && endDate != null) {
 				predicates.add(cb.between(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate),
 						cb.literal(endDate)));
-
 			} else if (startDate != null && endDate == null) {
 				predicates
 						.add(cb.greaterThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(startDate)));
-
 			} else if (startDate == null && endDate != null) {
 				predicates.add(cb.lessThanOrEqualTo(supplyRoot.<LocalDate> get("arrivalDate"), cb.literal(endDate)));
 			}
