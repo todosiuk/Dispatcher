@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.dao.SupplyDaoImpl;
 import dispatcher.entity.Supply;
@@ -85,10 +87,9 @@ public class SupplyController {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String search(@RequestParam Integer idProvider,
-			@RequestParam String department,
+	public String search(@RequestParam Integer idProvider, @RequestParam String department,
 			@RequestParam String carNumber,
-			@RequestParam ("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
 			@RequestParam("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@ModelAttribute("idAttribute") Supply supply, Model model) throws DaoException {
 
@@ -96,6 +97,11 @@ public class SupplyController {
 		model.addAttribute("supplyList", supplyList);
 
 		return "searchList";
+	}
+
+	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
+	public  ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply) {
+		return null;		
 	}
 
 }
