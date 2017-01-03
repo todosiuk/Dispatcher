@@ -44,6 +44,10 @@ public class Supply implements Serializable {
 			LocalDate now, String string7, String string8, Provider p) {
 	}
 
+	public Supply(int i, String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -3,13 +3,17 @@ package dispatcher.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.dao.SupplyDaoImpl;
@@ -91,17 +96,16 @@ public class SupplyController {
 			@RequestParam String carNumber,
 			@RequestParam("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
 			@RequestParam("arrivalDate") @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
-			@ModelAttribute("idAttribute") Supply supply, Model model) throws DaoException {
-
+			@ModelAttribute("idAttribute") Supply supply, HttpServletRequest request, Model model) throws DaoException {
 		List<Supply> supplyList = supplyDao.searchByCriteria(idProvider, department, carNumber, startDate, endDate);
 		model.addAttribute("supplyList", supplyList);
-
+		request.getSession().setAttribute("supplyList", supplyList);
 		return "searchList";
 	}
 
 	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
-	public  ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply) {
-		return null;		
+	public ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply, HttpServletRequest request) {
+		List<Supply> list = (List<Supply>) request.getSession().getAttribute("supplyList");
+		return new ModelAndView("excelView2", "supplyList", list);
 	}
-
 }

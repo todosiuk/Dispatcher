@@ -1,7 +1,6 @@
 package dispatcher.exportToExcel;
 
 import java.text.DateFormat;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class ExcelBuilder extends AbstractXlsxView {
 		response.setHeader("Content-Disposition", "attachment; filename=\"report.xls\"");
 
 		@SuppressWarnings("unchecked")
-		LinkedList<Supply> supplyes = (LinkedList<Supply>) model.get("supplyList");
+		List<Supply> supplyes = (List<Supply>) model.get("supplyList");
 
 		// create excel xls sheet
 		Sheet sheet = workbook.createSheet("Отчет");
@@ -47,7 +46,8 @@ public class ExcelBuilder extends AbstractXlsxView {
 		int rowCount = 1;
 		for (Supply supply : supplyes) {
 			Row supplyRow = sheet.createRow(rowCount++);
-			supplyRow.createCell(0).setCellValue(DATE_FORMAT.format(supply.getArrivalDate()));
+			String date = supply.getArrivalDate().toString();
+			supplyRow.createCell(0).setCellValue(date);
 			supplyRow.createCell(1).setCellValue(supply.getCarNumber());
 			supplyRow.createCell(2).setCellValue(supply.getDriverName());
 			supplyRow.createCell(3).setCellValue(supply.getPhone());
