@@ -1,28 +1,18 @@
 package dispatcher.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import dispatcher.dao.ProviderDaoImpl;
 import dispatcher.dao.SupplyDaoImpl;
 import dispatcher.entity.Supply;
@@ -101,11 +91,5 @@ public class SupplyController {
 		model.addAttribute("supplyList", supplyList);
 		request.getSession().setAttribute("supplyList", supplyList);
 		return "searchList";
-	}
-
-	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
-	public ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply, HttpServletRequest request) {
-		List<Supply> list = (List<Supply>) request.getSession().getAttribute("supplyList");
-		return new ModelAndView("excelView2", "supplyList", list);
 	}
 }
