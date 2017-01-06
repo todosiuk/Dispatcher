@@ -12,8 +12,12 @@
 	<div class="container-fluid" align="center">
 		<h1>Список поставок</h1>
 		<c:url var="export" value="/exportController/downloadExcel" />
+		<c:url var="reportPdf" value="/reportController/pdf" />
 		<h3>
 			<a href="${export}">Экспорт в Excel</a>
+		</h3>
+		<h3>
+			<a href="${reportPdf}">Отчет в PDF</a>
 		</h3>
 		<table class="table">
 			<thead style="background: #9AC0CD">
