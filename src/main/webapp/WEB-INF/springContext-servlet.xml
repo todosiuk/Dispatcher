@@ -11,9 +11,17 @@
         http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<context:component-scan base-package="dispatcher.controller" />
+
+	<bean id="viewResolver1"
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="order" value="1" />
+		<property name="basename" value="views" />
+	</bean>
+
 	<!-- Resolve view name into jsp file located on /WEB-INF -->
-	<bean id="viewResolver"
+	<bean id="viewResolver2"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2" />
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
@@ -24,6 +32,6 @@
 
 	<!-- Enable annotation-based Spring MVC controllers (eg: @Controller annotation) -->
 	<mvc:annotation-driven />
-	 
+
 
 </beans>

@@ -11,7 +11,11 @@
 	<a href="<c:url value="/logout" />">Выйти</a>
 
 	<h1>Список поставок</h1>
-
+	<c:url var="export" value="/supplyController/downloadExcel" />
+	<h3>
+		<a href="${export}">Экспорт в Excel</a>
+	</h3>
+	<
 	<table class="table">
 		<thead style="background: #9AC0CD">
 			<th>Дата поставки</th>
