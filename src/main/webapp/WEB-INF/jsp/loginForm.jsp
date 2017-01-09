@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html;charset=utf-8"%>
 
 <html>
 <head>
@@ -8,16 +9,16 @@
 </head>
 <body>
 	<div class="container-fluid" align="center">
-		<h3>Login with Username and Password</h3>
+		<h3>Вход</h3>
 		<c:url var="loginUrl" value="/login"></c:url>
 		<form action="${loginUrl}" method="POST">
 			<table>
 				<tr>
-					<td>User ID:</td>
+					<td>Логин:</td>
 					<td><input type='text' class="form-control" name='username' /></td>
 				</tr>
 				<tr>
-					<td>Password:</td>
+					<td>Пароль:</td>
 					<td><input type='password' class="form-control"
 						name='password' /></td>
 				</tr>

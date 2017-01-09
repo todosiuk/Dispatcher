@@ -13,16 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 import dispatcher.entity.Supply;
 
 @Controller
-@RequestMapping("/exportController")
-public class ExportToExcelController {
+@RequestMapping("/reportController")
+public class ReportController {
 
+	@RequestMapping(value = "/pdf", method = RequestMethod.GET)
+	public ModelAndView generatePdfreport(@ModelAttribute("supplyList") Supply supply, HttpServletRequest request) {
 
-	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
-	public ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply, HttpServletRequest request) {
-		List<Supply> list = (List<Supply>) request.getSession().getAttribute("supplyList");
-		return new ModelAndView("excelView2", "supplyList", list);
-
-
+		List<Supply> supplyList = (List<Supply>) request.getSession().getAttribute("supplyList");
+		return new ModelAndView("pdfView", "supplyList", supplyList);
 	}
 
 }
