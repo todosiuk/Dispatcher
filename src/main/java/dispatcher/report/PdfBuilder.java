@@ -6,10 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.BaseFont;
@@ -29,56 +27,55 @@ public class PdfBuilder extends AbstractITextPdfView {
 
 		document.add(new Paragraph("VISKOZNA"));
 
-		PdfPTable table = new PdfPTable(10);
-		//table.setWidthPercentage(100.0f);
-		//table.setWidths(new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f });
-		//table.setSpacingBefore(10);
+		PdfPTable table = new PdfPTable(6);
+		table.setWidthPercentage(100.0f);
+		// table.setWidths(new float[] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+		// 1.0f, 1.0f, 1.0f, 1.0f });
+		// table.setSpacingBefore(10);
 
 		// define font for table header row
-		Font font = FontFactory.getFont(FontFactory.HELVETICA, "UTF-8", BaseFont.EMBEDDED);
-		font.setColor(BaseColor.WHITE);
+		BaseFont baseFont = BaseFont.createFont("c:/windows/Fonts/MSMINCHO.TTF", BaseFont.IDENTITY_H,
+				BaseFont.EMBEDDED);
+
+		Font font = new Font(baseFont, 12, Font.BOLD);
 
 		// define table header cell
 		PdfPCell cell = new PdfPCell();
-		cell.setBackgroundColor(BaseColor.BLUE);
+
+		cell.setVerticalAlignment(5);
 		cell.setPadding(5);
 		// write table header
-		cell.setPhrase(new Phrase("Date", font));
+		cell.setPhrase(new Phrase("Дата", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("Car Number", font));
+		cell.setPhrase(new Phrase("Авто", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("Фамилия водителя", font));
+		cell.setPhrase(new Phrase("ФИО", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("Телефон", font));
+		cell.setPhrase(new Phrase("Тел", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("Отдел", font));
+		cell.setPhrase(new Phrase("РНК", font));
 		table.addCell(cell);
-		cell.setPhrase(new Phrase("Товар", font));
-		table.addCell(cell);
-		cell.setPhrase(new Phrase("Документ поставщика", font));
-		table.addCell(cell);
-		cell.setPhrase(new Phrase("Документ получателя", font));
-		table.addCell(cell);
-		cell.setPhrase(new Phrase("Кладовщик", font));
-		table.addCell(cell);
-		cell.setPhrase(new Phrase("Диспетчер", font));
+		cell.setPhrase(new Phrase("Пзк, Зкз", font));
 		table.addCell(cell);
 
+		BaseFont bf;
 		for (Supply sup : supplyList) {
+			bf = BaseFont.createFont("c:/windows/Fonts/MSMINCHO.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+			Font f = new Font(bf, 12);
 			String date = sup.getArrivalDate().toString();
 			table.addCell(date);
-			table.addCell(sup.getCarNumber());
-			table.addCell(sup.getDriverName());
-			table.addCell(sup.getPhone());
-			table.addCell(sup.getDepartment());
-			table.addCell(sup.getProduct());
-			table.addCell(sup.getVendorDocument());
-			table.addCell(sup.getDocumentReceiving());
-			table.addCell(sup.getStorekeeper());
-			table.addCell(sup.getDispatcher());
+			cell.setPhrase(new Phrase(sup.getCarNumber(), f));
+			table.addCell(cell);
+			cell.setPhrase(new Phrase(sup.getDriverName(), f));
+			table.addCell(cell);
+			cell.setPhrase(new Phrase(sup.getPhone(), f));
+			table.addCell(cell);
+			cell.setPhrase(new Phrase(sup.getVendorDocument(), f));
+			table.addCell(cell);
+			cell.setPhrase(new Phrase(sup.getDocumentReceiving(), f));
+			table.addCell(cell);
 		}
 		document.add(table);
-
 	}
 
 }
