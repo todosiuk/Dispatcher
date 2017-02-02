@@ -16,13 +16,10 @@ import dispatcher.entity.Supply;
 @RequestMapping("/exportController")
 public class ExportToExcelController {
 
-
 	@RequestMapping(value = "/downloadExcel", method = RequestMethod.GET)
 	public ModelAndView downloadExcel(@ModelAttribute("supplyList") Supply supply, HttpServletRequest request) {
 		List<Supply> list = (List<Supply>) request.getSession().getAttribute("supplyList");
 		return new ModelAndView("excelView2", "supplyList", list);
-
-
 	}
 
 }

@@ -19,5 +19,5 @@ public interface ProviderDao<Provider, String extends Serializable> {
 
 	public Provider findById(Integer id) throws DaoException;
 
-	public Provider findByName(String name) throws DaoException;
+	public Provider findByName(java.lang.String name) throws DaoException;
 }
